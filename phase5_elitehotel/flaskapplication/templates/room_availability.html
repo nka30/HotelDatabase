@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Room Availability</title>
+    <style>
+        /* General CSS */
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        /* Table styling */
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            text-align: center;
+            padding: 8px;
+        }
+
+        th {
+            background-color: #388087;
+            color: #fff;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        tr:hover {
+            background-color: #BADFE7;
+        }
+
+        /* Form input styling */
+         .form-container {
+            margin: 20px auto;
+            text-align: center;
+        }
+
+        .form-input {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            width: 10%; 
+            display: block;
+            margin: 0 auto;
+        }
+
+        .submit-button {
+            background-color: #388087;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 8px 16px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .submit-button:hover {
+            background-color: #255769;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Check Room Availability</h1>
+
+        <!-- Form for user inputs -->
+        <div class="form-container">
+            <form action="/room_availability" method="POST">
+                <label for="start_date">Available Start Date:</label><br>
+                <input type="date" id="start_date" name="start_date" class="form-input" required><br>
+
+                <label for="end_date">Available End Date:</label><br>
+                <input type="date" id="end_date" name="end_date" class="form-input" required><br>
+
+                <input type="submit" value="Check Availability" class="submit-button">
+            </form>
+        </div>
+
+        <!-- Display the room availability results -->
+        {% if room_results %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Room Number</th>
+                        <th>Room Type</th>
+                        <th>Price</th>
+                        <th>Available Start</th>
+                        <th>Available End</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for room in room_results %}
+                        <tr>
+                            <td>{{ room[0] }}</td>
+                            <td>{{ room[1] }}</td>
+                            <td>{{ room[2] }}</td>
+                            <td>{{ room[3] }}</td>
+                            <td>{{ room[4] }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+
+        <!-- Display error message if any -->
+        {% if error_message %}
+            <p style="color: red;">{{ error_message }}</p>
+        {% endif %}
+    </div>
+</body>
+</html>

@@ -1,0 +1,39 @@
+-- List of all males who were associated with the "Pool" service on a specific date
+WITH MaleCustomers AS (
+  SELECT DISTINCT C.Customer_ID, C.First, C.Last
+  FROM Customer AS C
+  INNER JOIN Uses AS U ON C.Customer_ID = U.CustomerID_fk
+  INNER JOIN Service AS S ON U.ServiceID_fk = S.ID
+  WHERE S.Type = 'Pool/day' -- Replace 'Pool' with your specific service type
+    AND DATE(U.Date) = '2023-11-10' -- Replace 'SpecificDate' with the date
+    AND C.Gender = 'Male'
+),
+MaleVisitors AS (
+  SELECT DISTINCT V.First_name, V.Last_name, V.Gender
+  FROM Visitor AS V
+  INNER JOIN Customer AS C ON V.Customer_ID_fk = C.Customer_ID
+  INNER JOIN Uses AS U ON C.Customer_ID = U.CustomerID_fk
+  INNER JOIN Service AS S ON U.ServiceID_fk = S.ID
+  WHERE S.Type = 'Pool/day' -- Replace 'Pool' with your specific service type
+    AND DATE(U.Date) = '2023-11-10' -- Replace 'SpecificDate' with the date
+    AND V.Gender = 'Male'
+),
+MaleStaff AS (
+  SELECT DISTINCT St.StaffID, St.Fname, St.Lname
+  FROM Staff AS St
+  INNER JOIN Provides AS P ON St.StaffID = P.StaffID_fk
+  INNER JOIN Service AS S ON P.ServiceID_fk = S.ID
+  INNER JOIN Shift AS Sh ON P.Shift_ID_fk = Sh.Shift_ID
+  WHERE S.Type = 'Pool/day' -- Replace 'Pool' with your specific service type
+    AND Sh.Day = 'Friday' -- Replace 'SpecificDay' with the day
+    AND St.Gender = 'Male'
+)
+-- Combine the results into a single table
+SELECT 'Male Customers' AS "Category", Customer_ID AS "ID", First AS "First Name", Last AS "Last Name"
+FROM MaleCustomers
+UNION ALL
+SELECT 'Male Visitors' AS "Category", NULL, First_name, Last_name
+FROM MaleVisitors
+UNION ALL
+SELECT 'Male Staff' AS "Category", StaffID, Fname, Lname
+FROM MaleStaff;

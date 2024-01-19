@@ -1,0 +1,44 @@
+-- Calculate the total amount paid by each customer in 2023
+WITH CustomerRevenue AS (
+  SELECT
+    SUM(Amount_paid) AS TotalAmountPaid
+  FROM pays
+  WHERE EXTRACT(YEAR FROM Payment_date) = 2023
+)
+
+-- Calculate the total yearly salary for each employee
+, EmployeeSalary AS (
+  SELECT
+    Salary * 12 AS TotalSalary
+  FROM Staff
+)
+
+-- Calculate the total yearly price for contractors
+, ContractorExpense AS (
+  SELECT
+    SUM(Amount) AS TotalContractorExpense
+  FROM Contractor
+  WHERE Start_date <= '2023-12-31' AND End_date >= '2023-01-01'
+)
+-- Calculate the total yearly price for inventory
+, InventoryExpense AS (
+  SELECT
+    SUM(i.Price * s.Amount) AS TotalInventoryExpense
+  FROM Inventory i
+  JOIN Supplies s ON i.Inventory_ID = s.InventoryID_fk
+  WHERE EXTRACT(YEAR FROM s.Date_supplied) = 2023
+)
+
+-- Calculate the overall revenue for 2023
+SELECT
+  COALESCE(cr.TotalAmountPaid, 0) AS CustomerRevenue,
+  COALESCE(SUM(es.TotalSalary), 0) AS TotalSalaryExpense,
+  COALESCE(ce.TotalContractorExpense, 0) AS TotalContractorExpense,
+  COALESCE(ie.TotalInventoryExpense, 0) AS TotalInventoryExpense,
+  COALESCE(cr.TotalAmountPaid, 0) - COALESCE(SUM(es.TotalSalary), 0)
+  - COALESCE(ce.TotalContractorExpense, 0) - COALESCE(ie.TotalInventoryExpense, 0) AS Revenue
+FROM CustomerRevenue cr
+CROSS JOIN EmployeeSalary es
+CROSS JOIN ContractorExpense ce
+CROSS JOIN InventoryExpense ie
+GROUP BY ce.TotalContractorExpense, cr.TotalAmountPaid, ie.TotalInventoryExpense;

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Event</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #BADFE7;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        form {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            width: 400px;
+            text-align: left;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        label {
+            font-weight: bold;
+            color: #388087;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .input-container {
+            margin-bottom: 10px;
+        }
+
+        input[type="text"],
+        select {
+            width: calc(100% - 22px); /* Adjusted width to accommodate the border width */
+            padding: 10px;
+            border: 2px solid #388087;
+            border-radius: 5px;
+            margin-bottom: 10px; /* Added margin between elements */
+        }
+
+        input[type="submit"] {
+            background-color: #388087;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #255769;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Edit Contractor Entry</h1>
+        <form method="POST" action="/contractor/edit/{{ contractor[0] }}/{{ contractor[1] }}/{{ contractor[2] }}">
+            <!-- Input fields for editing a Contractor entry -->
+            <label for="name">Contractor Name:</label>
+            <input type="text" id="name" name="name" required value="{{ contractor[0] }}"><br><br>
+            
+            <label for="start_date">Start Date:</label>
+            <input type="date" id="start_date" name="start_date" required value="{{ contractor[1] }}"><br><br>
+            
+            <label for="end_date">End Date:</label>
+            <input type="date" id="end_date" name="end_date" required value="{{ contractor[2] }}"><br><br>
+            
+            <label for="type">Contractor Type:</label>
+            <input type="text" id="type" name="type" required value="{{ contractor[3] }}"><br><br>
+            
+            <label for="phone_number">Phone Number:</label>
+            <input type="number" id="phone_number" name="phone_number" value="{{ contractor[4] }}"><br><br>
+            
+            <label for="location">Location:</label>
+            <input type="text" id="location" name="location" value="{{ contractor[5] }}"><br><br>
+            
+            <label for="service_id_fk">Service ID:</label>
+            <input type="number" id="service_id_fk" name="service_id_fk" value="{{ contractor[6] }}"><br><br>
+            
+            <label for="amount">Amount:</label>
+            <input type="number" id="amount" name="amount" required min="0" step="0.01" value="{{ contractor[7] }}"><br><br>
+            
+            <label for="supervisor">Supervisor:</label>
+            <input type="text" id="supervisor" name="supervisor" value="{{ contractor[8] }}"><br><br>
+            
+            <label for="description">Description:</label>
+            <input type="text" id="description" name="description" value="{{ contractor[9] }}"><br><br>
+            
+            <input type="submit" value="Update Contractor">
+
+            {% if error_message %}
+                <p style="color: red;">{{ error_message }}</p>
+            {% endif %}
+        </form>
+    </div>
+</body>
+
+
+
+</html>

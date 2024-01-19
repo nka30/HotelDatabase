@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Provides</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #BADFE7;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        form {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            width: 400px;
+            text-align: left;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        label {
+            font-weight: bold;
+            color: #388087;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .input-container {
+            margin-bottom: 10px;
+        }
+
+        input[type="text"],
+        select {
+            width: calc(100% - 22px); /* Adjusted width to accommodate the border width */
+            padding: 10px;
+            border: 2px solid #388087;
+            border-radius: 5px;
+            margin-bottom: 10px; /* Added margin between elements */
+        }
+
+        input[type="submit"] {
+            background-color: #388087;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #255769;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Edit Provides Entry</h1>
+        <form method="POST" action="/provides/edit/{{ provides[0] }}/{{ provides[1] }}/{{ provides[2] }}">
+            <!-- Input fields for editing a Provides entry -->
+            <label for="staffid">Staff ID:</label>
+            <input type="number" id="staffid" name="staffid" required min="0" step="1" value="{{ provides[0] }}"><br><br>
+            
+            <label for="serviceid">Service ID:</label>
+            <input type="number" id="serviceid" name="serviceid" required min="0" step="1" value="{{ provides[1] }}"><br><br>
+            
+            <label for="shift_id">Shift ID:</label>
+            <input type="number" id="shift_id" name="shift_id" required min="0" step="1" value="{{ provides[2] }}"><br><br>
+            
+            <input type="submit" value="Update Provides">
+
+            {% if error_message %}
+                <p style="color: red;">{{ error_message }}</p>
+            {% endif %}
+        </form>
+    </div>
+</body>
+</html>

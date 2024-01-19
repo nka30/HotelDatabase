@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add New Bill</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #BADFE7;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+
+        form {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            width: 400px;
+            text-align: left;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        label {
+            font-weight: bold;
+            color: #388087;
+            display: inline-block; /* Show labels in the same line */
+            width: 30%; /* Set width for labels */
+            text-align: right; /* Align labels to the right */
+            margin-right: 10px; /* Add some right margin */
+        }
+
+        .input-container {
+            margin-bottom: 10px;
+        }
+
+        input[type="text"],
+        select {
+            width: 80%;
+            padding: 10px;
+            border: 2px solid #388087;
+            border-radius: 5px;
+        }
+
+        input[type="submit"] {
+            background-color: #388087;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #255769;
+        }
+    </style>
+</head>
+<body>
+    
+    <form method="POST" action="/bill/add">
+        <!-- Input fields for adding a customer -->
+        
+        <label for="billid">Bill ID:</label>
+        <input type="text" id="billid" name="billid" required><br><br>
+        
+        <label for="DC">Date created:</label>
+        <input type="datetime-local" id="DC" name="DC" required><br><br>
+    
+        <label for="GT">Grand total:</label>
+        <input type="text" id="GT" name="GT" required><br><br>
+    
+        <label for="cid">Customer ID:</label>
+        <input type="text" id="cid" name="cid" required><br><br>
+    
+    
+        <input type="submit" value="Add Bill">
+        {% if error_message %}
+        <p style="color: red;">{{ error_message }}</p>
+    {% endif %}
+    </form>
+
+</body>
+</html>

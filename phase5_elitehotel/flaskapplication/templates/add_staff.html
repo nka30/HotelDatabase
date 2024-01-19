@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #BADFE7;
+        text-align: center;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+    }
+
+
+    form {
+        background-color: white;
+        border-radius: 10px;
+        padding: 20px;
+        width: 400px;
+        text-align: left;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    label {
+        font-weight: bold;
+        color: #388087;
+        display: inline-block; /* Show labels in the same line */
+        width: 30%; /* Set width for labels */
+        text-align: right; /* Align labels to the right */
+        margin-right: 10px; /* Add some right margin */
+    }
+
+    .input-container {
+        margin-bottom: 10px;
+    }
+
+    input[type="text"],
+    select {
+        width: 80%;
+        padding: 10px;
+        border: 2px solid #388087;
+        border-radius: 5px;
+    }
+
+    input[type="submit"] {
+        background-color: #388087;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    input[type="submit"]:hover {
+        background-color: #255769;
+    }
+</style>
+    <meta charset="UTF-8">
+    <title>Add Staff</title>
+</head>
+<body>
+    <h1>Add Staff</h1>
+    <form action="/staff/add" method="post">
+        Staff ID: <input type="text" name="staff_id"><br><br>
+        Salary: <input type="text" name="salary"><br><br>
+        Gender: <input type="text" name="gender"><br><br>
+        First Name: <input type="text" name="first_name"><br><br>
+        Last Name: <input type="text" name="last_name"><br><br>
+        Birth Date: <input type="date" name="birth_date"><br><br>
+        Address: <input type="text" name="address"><br><br>
+        ID Document: <input type="text" name="id_document"><br><br>
+        Department:
+        <select name="department_fk">
+            {% for department in departments %}
+                <option value="{{ department[0] }}">{{ department[0] }}</option>
+            {% endfor %}
+        </select><br><br>
+        <input type="submit" value="Add Staff">
+    </form>
+</body>
+</html>

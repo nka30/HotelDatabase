@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Inventory</title>
+    <style>
+        /* Custom CSS for table styling */
+        body {
+            font-family: Arial, sans-serif;
+        }
+        
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            text-align: center;
+            padding: 8px;
+        }
+
+        th {
+            background-color: #388087;
+            color: #fff;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        tr:hover {
+            background-color: #BADFE7;
+        }
+        .go-back-button {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background-color: #388087;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        cursor: pointer;
+    }
+    /* Style for Add Customer button */
+        .add-customer-button {
+            background-color: #388087;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 8px 16px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        
+        .add-customer-button:hover {
+            background-color: #255769;
+        }
+        /* Style for Edit button */
+        .edit-button {
+            background-color: #388087;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 8px 16px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .edit-button:hover {
+            background-color: #255769;
+        }
+        
+        /* Style for Delete button */
+        .delete-button {
+            background-color: #ff6347;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 8px 16px;
+            cursor: pointer;
+        }
+
+    </style>
+</head>
+<body>
+   <div class="container">
+  <button class="add-customer-button" onclick="window.location.href='/inventory/add'">Add Inventory</button>
+
+       <h1 class="mt-5 mb-3">Inventory</h1>
+       <table>
+    <thead>
+        <tr>
+            <th>Inventory_ID </th>
+            <th>Dep_Name</th>
+            <th>Type </th>
+            <th>Name  </th>
+            <th>Price </th>
+            <th>Amount </th>
+            <th>Actions</th> <!-- New column header for Edit/Delete -->
+        </tr>
+    </thead>
+    <tbody>
+        {% for row in data %}
+            <tr>
+                <td>{{ row[0] }}</td>
+                <td>{{ row[1] }}</td>
+                <td>{{ row[2] }}</td>
+                <td>{{ row[3] }}</td>
+                <td>{{ row[4] }}</td>
+                <td>{{ row[5] }}</td>
+                
+               <td>
+                <button class="edit-button" onclick="window.location.href='/inventory/edit/{{ row[0] }}'">Edit</button>
+                <form action="/inventory/delete/{{ row[0] }}" method="POST">
+                    <button class="delete-button" type="submit">Delete</button>
+                </form>
+            </td>
+
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+       <button class="go-back-button" onclick="window.location.href='/home'">Go Back to Home</button>
+
+   </div>
+</body>
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Book</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #BADFE7;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        form {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            width: 400px;
+            text-align: left;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        label {
+            font-weight: bold;
+            color: #388087;
+            display: inline-block;
+            width: 30%;
+            text-align: right;
+            margin-right: 10px;
+        }
+
+        .input-container {
+            margin-bottom: 10px;
+        }
+
+        input[type="text"],
+        select {
+            width: 80%;
+            padding: 10px;
+            border: 2px solid #388087;
+            border-radius: 5px;
+        }
+
+        input[type="submit"] {
+            background-color: #388087;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #255769;
+        }
+
+        .error-message {
+            color: red;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <form method="POST" action="/books/edit/{{ book[0] }}/{{ book[1] }}/{{ book[2] }}/{{ book[3] }}">
+        <!-- Input fields for editing a book -->
+        <label for="start_time">Start Time:</label>
+        <input type="datetime-local" id="start_time" name="start_time" required value="{{ book[0] }}"><br><br>
+        
+        <label for="end_time">End Time:</label>
+        <input type="datetime-local" id="end_time" name="end_time" required value="{{ book[1] }}"><br><br>
+    
+        <label for="room_number">Room Number:</label>
+        <input type="text" id="room_number" name="room_number" required value="{{ book[2] }}"><br><br>
+    
+        <label for="customer_id">Customer ID:</label>
+        <input type="text" id="customer_id" name="customer_id" required value="{{ book[3] }}"><br><br>
+    
+        <label for="date_booked">Date Booked:</label>
+        <input type="date" id="date_booked" name="date_booked" required value="{{ book[4] }}"><br><br>
+    
+        <input type="submit" value="Edit Booking">
+        {% if error_message %}
+            <p class="error-message">{{ error_message }}</p>
+        {% endif %}
+    </form>
+</body>
+</html>

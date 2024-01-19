@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+        /* Custom CSS for table styling */
+        body {
+            font-family: Arial, sans-serif;
+        }
+        
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            text-align: center;
+            padding: 8px;
+        }
+
+        th {
+            background-color: #388087;
+            color: #fff;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        tr:hover {
+            background-color: #BADFE7;
+        }
+        .go-back-button {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background-color: #388087;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        cursor: pointer;
+    }
+    /* Style for Add Customer button */
+        .add-button {
+            background-color: #388087;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 8px 16px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        
+        .add-button:hover {
+            background-color: #255769;
+        }
+        /* Style for Edit button */
+        .edit-button {
+            background-color: #388087;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 8px 16px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .edit-button:hover {
+            background-color: #255769;
+        }
+        
+        /* Style for Delete button */
+        .delete-button {
+            background-color: #ff6347;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 8px 16px;
+            cursor: pointer;
+        }
+
+    </style>
+    <title>Visitor Records</title>
+</head>
+<body>
+    <h1>Visitor Records</h1>
+    <button class="add-button" onclick="window.location.href='/visitor/add'">Add</button>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Customer ID</th>
+                <th>Date of Visit</th>
+                <th>Gender</th>
+                <th>Phone Number</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for visitor in data %}
+                <tr>
+                    <td>{{ visitor[0] }}</td>
+                    <td>{{ visitor[1] }}</td>
+                    <td>{{ visitor[2] }}</td>
+                    <td>{{ visitor[3] }}</td>
+                    <td>{{ visitor[4] }}</td>
+                    <td>{{ visitor[5] }}</td>
+                    <td>
+                    <button class="edit-button" onclick="window.location.href='/visitor/edit/{{ visitor[0] }}/{{ visitor[1] }}/{{ visitor[2] }}/{{ visitor[3] }}'">Edit</button>
+                    <form action="/visitor/delete/{{ visitor[0] }}/{{ visitor[1] }}/{{ visitor[2] }}/{{ visitor[3] }}" method="post">
+                        <input type="submit" value="Delete" onclick="return confirm('Are you sure?')">
+                    </form>
+                    </td>
+
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+     <button class="go-back-button" onclick="window.location.href='/home'">Go Back to Home</button>
+</body>
+</html>

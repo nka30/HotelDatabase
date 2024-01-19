@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #BADFE7;
+        text-align: center;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+    }
+
+
+    form {
+        background-color: white;
+        border-radius: 10px;
+        padding: 20px;
+        width: 400px;
+        text-align: left;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    label {
+        font-weight: bold;
+        color: #388087;
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    .input-container {
+        margin-bottom: 10px;
+    }
+
+    input[type="text"],
+    select {
+        width: 80%;
+        padding: 10px;
+        border: 2px solid #388087;
+        border-radius: 5px;
+    }
+
+    input[type="submit"] {
+        background-color: #388087;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    input[type="submit"]:hover {
+        background-color: #255769;
+    }
+</style>
+    <meta charset="UTF-8">
+    <title>Edit Service</title>
+</head>
+<body>
+    <h1>Edit Service</h1>
+    <form action="/service/edit/{{ service[0] }}" method="post">
+        <label for="price">Price:</label>
+        <input type="text" name="price" value="{{ service[1] }}"><br>
+        
+        <label for="service_type">Type:</label>
+        <input type="text" name="service_type" value="{{ service[2] }}"><br>
+        
+        <label for="location">Location:</label>
+        <input type="text" name="location" value="{{ service[3] }}"><br>
+        
+        <label for="start_timestamp">Start Time:</label>
+        <input type="time" name="start_timestamp" value="{{ service[4] }}"><br>
+        
+        <label for="end_timestamp">End Time:</label>
+        <input type="time" name="end_timestamp" value="{{ service[5] }}"><br>
+        
+        <input type="submit" value="Update">
+    </form>
+</body>
+</html>

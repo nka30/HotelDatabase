@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Checks-in Entry</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #BADFE7;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+
+        form {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            width: 400px;
+            text-align: left;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        label {
+            font-weight: bold;
+            color: #388087;
+            display: inline-block; /* Show labels in the same line */
+            width: 30%; /* Set width for labels */
+            text-align: right; /* Align labels to the right */
+            margin-right: 10px; /* Add some right margin */
+        }
+
+        .input-container {
+            margin-bottom: 10px;
+        }
+
+        input[type="text"],
+        select {
+            width: 80%;
+            padding: 10px;
+            border: 2px solid #388087;
+            border-radius: 5px;
+        }
+
+        input[type="submit"] {
+            background-color: #388087;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #255769;
+        }
+    </style>
+</head>
+<body>
+    <h1>Add Checks-in Entry</h1>
+    <form action="/checks_in/add" method="post">
+        <label for="room_number">Room Number:</label>
+        <input type="number" id="room_number" name="room_number" required><br><br>
+
+        <label for="customer_id">Customer ID:</label>
+        <input type="number" id="customer_id" name="customer_id" required><br><br>
+
+        <label for="date">Date:</label>
+        <input type="datetime-local" id="date" name="date" required><br><br>
+
+        <input type="submit" value="Add Checks-in Entry">
+    </form>
+</body>
+</html>

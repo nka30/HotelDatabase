@@ -1,0 +1,41 @@
+WITH sid(staffid) AS (
+    SELECT staffid FROM staff
+    EXCEPT 
+    SELECT DISTINCT staffid_fk FROM receives)
+
+SELECT *
+FROM staff AS st
+WHERE (
+(	 EXISTS (SELECT staffid FROM sid LIMIT 1) 
+	 AND st.staffid IN (
+            (WITH filter_dep(staffid, CO) AS (
+                SELECT d.staffid_fk, COUNT(d.*) AS CO FROM dependent AS d
+                GROUP BY d.staffid_fk)
+			 
+            SELECT staffid
+            FROM filter_dep
+            WHERE ((CO BETWEEN (SELECT MAX(CO) FROM filter_dep) AND (SELECT MAX(CO) - 1 FROM filter_dep))
+			 OR CO =(SELECT MAX(CO) FROM filter_dep))
+			)) ) 
+	
+	OR st.staffid IN(
+		(WITH filter_receives(staffid_fk, CO) AS (
+			SELECT r.staffid_fk, COUNT(r.*) AS CO 
+			FROM receives AS r
+			GROUP BY r.staffid_fk),
+		 
+		filter_dep(staffid, COO) AS (
+			SELECT f.staffid_fk, COUNT(f.*) AS COO 
+			FROM filter_receives f 
+			JOIN dependent d ON d.staffid_fk = f.staffid_fk
+			WHERE f.CO BETWEEN (SELECT MIN(CO) FROM filter_receives) AND (SELECT MIN(CO) + 1 FROM filter_receives)
+			GROUP BY f.staffid_fk )
+		 
+			SELECT fi.staffid 
+			FROM filter_dep AS fi
+			WHERE fi.COO BETWEEN (SELECT MAX(COO) FROM filter_dep) AND (SELECT MAX(COO) - 1 FROM filter_dep)
+			OR fi.COO = (SELECT MAX(COO) FROM filter_dep))))
+			
+	 	AND st.salary BETWEEN 400 AND 1500;
+
+			

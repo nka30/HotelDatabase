@@ -1,0 +1,22 @@
+WITH award_subquery AS (
+    SELECT staffid_fk, COUNT(*) AS AwardsCount
+    FROM receives 
+    WHERE date BETWEEN current_date - INTERVAL '1 year' AND current_date
+    GROUP BY staffid_fk
+   	HAVING count(*)>=5
+), shift_subquery AS (
+    SELECT staffid_fk, COUNT(*) AS ShiftsCount
+    FROM provides
+    GROUP BY staffid_fk
+    HAVING COUNT(*) > 5
+)
+UPDATE staff
+SET salary = (((award_subquery.AwardsCount * 0.05) + 
+             ((shift_subquery.ShiftsCount - 5) * 0.05)) * Salary)+salary
+FROM award_subquery, shift_subquery
+WHERE staff.staffid = award_subquery.staffid_fk
+  AND staff.staffid = shift_subquery.staffid_fk
+RETURNING staff.staffid, 
+award_subquery.AwardsCount, 
+shift_subquery.ShiftsCount,
+staff.salary;

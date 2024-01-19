@@ -1,0 +1,9 @@
+SELECT name, phone_number
+FROM department
+WHERE NAME IN(
+	SELECT DISTINCT dep_name_fk 
+	FROM inventory
+	WHERE inventory_id IN(
+		SELECT DISTINCT inventoryid_fk
+		FROM supplies
+		WHERE LOWER(suppliername_fk) LIKE LOWER('%Jilouna%')))

@@ -1,0 +1,16 @@
+SELECT
+    Room_Number,
+    Room_type,
+    Price,
+    '2023-10-2' AS AvailableStart,
+    '2023-10-5' AS AvailableEnd
+FROM
+    Room
+WHERE
+    Room_Number NOT IN (
+        SELECT DISTINCT RoomNumber_fk
+        FROM Books
+        WHERE Start_timestamp <= '2023-10-5'
+          AND End_timestamp >= '2023-10-2'
+    )
+ORDER BY price;

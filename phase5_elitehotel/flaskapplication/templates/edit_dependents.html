@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Department</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #BADFE7;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        form {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            width: 400px;
+            text-align: left;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        label {
+            font-weight: bold;
+            color: #388087;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .input-container {
+            margin-bottom: 10px;
+        }
+
+        input[type="text"],
+        select {
+            width: calc(100% - 22px); /* Adjusted width to accommodate the border width */
+            padding: 10px;
+            border: 2px solid #388087;
+            border-radius: 5px;
+            margin-bottom: 10px; /* Added margin between elements */
+        }
+
+        input[type="submit"] {
+            background-color: #388087;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #255769;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Edit Dependent</h1>
+        <form method="POST" action="/dependents/edit/{{ dep[0] }}/{{ dep[1] }}/{{ dep[2] }}">
+            <!-- Input fields for editing a dependent -->
+            <label for="last_name">Last Name:</label>
+            <input type="text" id="last_name" name="last_name" required value="{{ dep[1] }}"><br><br>
+            
+            <label for="staff_id">Staff ID:</label>
+            <input type="text" id="staff_id" name="staff_id" required value="{{ dep[2] }}"><br><br>
+        
+            <label for="relationship">Relationship:</label>
+            <input type="text" id="relationship" name="relationship" required value="{{ dep[3] }}"><br><br>
+        
+            <label for="birth_date">Birth Date:</label>
+            <input type="date" id="birth_date" name="birth_date" required value="{{ dep[4] }}"><br><br>
+            
+            <label for="phone_number">Phone Number:</label>
+            <input type="text" id="phone_number" name="phone_number" required value="{{ dep[5] }}"><br><br>
+
+            <label for="gender">Gender:</label>
+            <select id="gender" name="gender">
+                <option value="Male" {% if dep[6] == 'Male' %} selected {% endif %}>Male</option>
+                <option value="Female" {% if dep[6] == 'Female' %} selected {% endif %}>Female</option>
+                <!-- Add more options as needed -->
+            </select><br><br>
+        
+            <input type="submit" value="Edit Dependent">
+            {% if error_message %}
+                <p style="color: red;">{{ error_message }}</p>
+            {% endif %}
+        </form>
+    </div>
+</body>
+</html>

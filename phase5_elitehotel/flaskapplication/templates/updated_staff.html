@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Updated Staff Information</title>
+    <style>
+        /* Custom CSS for table styling */
+        body {
+            font-family: Arial, sans-serif;
+        }
+        
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            text-align: center;
+            padding: 8px;
+        }
+
+        th {
+            background-color: #388087;
+            color: #fff;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        tr:hover {
+            background-color: #BADFE7;
+        }
+        .go-back-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #388087;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Updated Staff Information: Salary Bonus </h1>
+
+        <!-- Table displaying updated staff information -->
+        <table>
+            <thead>
+                <tr>
+                    <th>Staff ID</th>
+                    <th>Awards Count</th>
+                    <th>Shifts Count</th>
+                    <th>Salary</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for staff_info in updated_staff %}
+                    <tr>
+                        <td>{{ staff_info[0] }}</td>
+                        <td>{{ staff_info[1] }}</td>
+                        <td>{{ staff_info[2] }}</td>
+                        <td>{{ staff_info[3] }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <button class="go-back-button" onclick="window.location.href='/home'">Go Back</button>
+    </div>
+</body>
+</html>

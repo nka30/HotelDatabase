@@ -1,0 +1,10 @@
+SELECT C.customer_id, S.type, COUNT(S.type) AS Nb_Uses
+FROM service AS S
+JOIN uses AS U 
+ON U.serviceid_fk = S.ID
+JOIN customer AS C 
+ON U.customerid_fk = C.customer_id
+WHERE U.DATE  BETWEEN 
+(SELECT MAX(date) FROM checks_in WHERE customerid_fk = C.customer_id) AND 
+(SELECT MAX(date) FROM checks_out WHERE customerid_fk = C.customer_id)
+GROUP BY C.customer_id, S.type;

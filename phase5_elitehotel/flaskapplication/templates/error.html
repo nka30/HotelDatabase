@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Error</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 70%;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #388087;
+        }
+
+        p {
+            color: #333;
+        }
+
+        .button {
+            background-color: #388087;
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            display: inline-block;
+            margin-top: 20px;
+        }
+
+        .button:hover {
+            background-color: #255769;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Error</h1>
+        <p>An error occurred: {{ error_message }}</p>
+        <a href="{{ redirect_url }}" class="button">Go back to {{ redirect_label }}</a>
+    </div>
+</body>
+
+</html>

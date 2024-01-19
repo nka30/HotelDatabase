@@ -1,0 +1,38 @@
+	WITH 
+	min_date AS(
+		SELECT MIN(c.latest_checkin) AS first_checkin_not_check_out, c.customerid_fk
+				FROM (
+					SELECT ci.roomnumber_fk, ci.customerid_fk, MAX(ci.date) AS latest_checkin
+					FROM checks_in ci
+					GROUP BY ci.roomnumber_fk, ci.customerid_fk ) AS c
+				LEFT JOIN checks_out co ON c.roomnumber_fk = co.roomnumber_fk
+				AND c.customerid_fk = co.customerid_fk AND co.date> c.latest_checkin
+				WHERE co.date IS NULL 
+				GROUP BY c.customerid_fk
+	),
+	payment1 AS (
+		SELECT SUM(b.amount_paid) AS total_amount_paid, c.customer_id_fk
+		FROM pays AS b
+		JOIN bill c ON c.Bill_ID = b.Bill_ID_fk 
+		WHERE b.payment_date  >= (
+			SELECT first_checkin_not_check_out
+			FROM min_date AS m
+			WHERE m.customerid_fk = c.customer_id_fk
+		)
+		GROUP BY  c.customer_id_fk
+	),
+	payment2 AS (
+		SELECT SUM(b.grand_total) AS grandTotal, b.customer_id_fk 
+		FROM bill AS b
+		WHERE b.date_created >= (
+			SELECT first_checkin_not_check_out
+			FROM min_date AS m
+			WHERE m.customerid_fk = b.customer_id_fk
+		)
+		GROUP BY b.customer_id_fk
+	)
+
+	SELECT p.customer_id_fk, p.total_amount_paid, p2.grandTotal, (p2.grandTotal- p.total_amount_paid) AS remaining
+	FROM payment1 p
+	JOIN payment2 p2 ON p.customer_id_fk = p2.customer_id_fk;
+
