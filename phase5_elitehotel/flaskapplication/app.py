@@ -11,7 +11,7 @@ def connect_to_database():
         conn = psycopg2.connect(
             database='phase5',
             user='postgres',
-            password='rootroot123',
+            password='',
             host='127.0.0.1',
             port="5432"
         )
